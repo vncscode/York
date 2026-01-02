@@ -32,7 +32,7 @@ jobs:
 
       - uses: docker/build-push-action@v4
         with:
-          context: ./gta
+          context: ./gta/${{ matrix.game }}
           file: ./gta/${{ matrix.game }}/dockerfile
           platforms: linux/amd64
           push: true
