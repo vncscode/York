@@ -1,4 +1,4 @@
-name: build Games
+name: build Gta
 on:
   workflow_dispatch:
   schedule:
@@ -7,18 +7,18 @@ on:
     branches:
       - main
     paths:
-      - Games/**
+      - gta/**
 jobs:
   push:
-    name: "games:${{ matrix.game }}"
+    name: "gta:${{ matrix.game }}"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         game:
-          - cs-1.6
-          - stardew-valley
-
+          - "lite"
+          - "full"
+          
     steps:
       - uses: actions/checkout@v3
       - uses: docker/setup-buildx-action@v2
@@ -32,9 +32,9 @@ jobs:
 
       - uses: docker/build-push-action@v4
         with:
-          context: ./Games/${{ matrix.game }}
-          file: ./Games/${{ matrix.game }}/dockerfile
+          context: ./gta
+          file: ./gta/${{ matrix.game }}/dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/drysius/games:${{ matrix.game }}
+            ghcr.io/drysius/gta:${{ matrix.game }}
