@@ -29,5 +29,10 @@ EOF
 
 # Run the Server
 echo "Starting 3proxy..."
-# Executing directly keeps the process as PID 1 or child of entrypoint, ensuring signals are handled
-exec 3proxy 3proxy.cfg
+
+# Replace Startup Variables
+MODIFIED_STARTUP=$(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
+echo -e ":/home/container$ ${MODIFIED_STARTUP}"
+
+# Run the Server
+eval ${MODIFIED_STARTUP}
