@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         game:
-          - "3proxy"
+          - proxy3
           
     steps:
       - uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
       - uses: docker/build-push-action@v4
         with:
           context: ./dockers/${{ matrix.game }}
-          file: ./dockerfile
+          file: ./dockers/${{ matrix.game }}/dockerfile
           platforms: linux/amd64
           push: true
           tags: |
