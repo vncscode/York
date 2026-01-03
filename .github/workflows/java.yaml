@@ -17,6 +17,7 @@ jobs:
       matrix:
         tag:
           - 8
+          - o8
           - 8j9
           - 11
           - 11j9
