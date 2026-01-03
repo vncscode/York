@@ -10,7 +10,7 @@ on:
       - dockers/**
 jobs:
   push:
-    name: "gta:${{ matrix.game }}"
+    name: "dockers:${{ matrix.game }}"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
