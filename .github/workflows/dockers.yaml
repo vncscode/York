@@ -31,8 +31,8 @@ jobs:
 
       - uses: docker/build-push-action@v4
         with:
-          context: ./proxy/${{ matrix.game }}
-          file: ./proxy/${{ matrix.game }}/dockerfile
+          context: ./dockers/${{ matrix.game }}
+          file: ./dockers/${{ matrix.game }}/dockerfile
           platforms: linux/amd64
           push: true
           tags: |
