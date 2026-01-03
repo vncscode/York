@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     iproute2 \
     && rm -rf /var/lib/apt/lists/*
 
-# Download and compile 3proxy  a
+# Download and compile 3proxy  a 
 WORKDIR /tmp
 RUN wget https://github.com/z3APA3A/3proxy/archive/refs/tags/0.9.4.tar.gz \
     && tar -xzvf 0.9.4.tar.gz \
