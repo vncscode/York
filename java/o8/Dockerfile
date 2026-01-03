@@ -1,5 +1,9 @@
 FROM ubuntu:22.04
 
+# Configurar ambiente não interativo
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
+
 LABEL author="Drysius" maintainer="danielolxlol@gmail.com"
 LABEL org.opencontainers.image.source="https://github.com/drysius/York"
 LABEL org.opencontainers.image.licenses=MIT
