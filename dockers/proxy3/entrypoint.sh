@@ -4,33 +4,37 @@ cd /home/container
 # Make internal Docker IP address available to processes.
 export INTERNAL_IP=`ip route get 1 | awk '{print $(NF-2);exit}'`
 
-# Ensure variables are set
+# Ensure variables are set for the config generation
 SERVER_PORT=${SERVER_PORT:-1080}
 PROXY_USER=${PROXY_USER:-user}
 PROXY_PASSWORD=${PROXY_PASSWORD:-password}
 
-echo "Configuring 3proxy SOCKS5 on port ${SERVER_PORT}..."
+echo "Generating 3proxy configuration..."
 
-# Create 3proxy config
-# Using 'auth strong' requires users list
-# We configure SOCKS5 on SERVER_PORT
+# Create 3proxy.cfg based on documentation
+# Note: 'daemon' is OMITTED to keep it in foreground for Docker
 cat <<EOF > 3proxy.cfg
 nserver 8.8.8.8
 nserver 8.8.4.4
 nscache 65536
 timeouts 1 5 30 60 180 1800 15 60
-daemon
+
+# Log to stdout
+log
+
+# Authentication
 auth strong
-users ${PROXY_USER}:CL:${PROXY_PASSWORD}
-allow ${PROXY_USER}
+users "${PROXY_USER}:CL:${PROXY_PASSWORD}"
+allow "${PROXY_USER}"
+
+# Services
 socks -p${SERVER_PORT}
+proxy -p3128
+
 flush
 EOF
 
-# Run the Server
-echo "Starting 3proxy..."
-
-# Replace Startup Variables
+# Replace Startup Variables (Pterodactyl Standard)
 MODIFIED_STARTUP=$(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
 echo -e ":/home/container$ ${MODIFIED_STARTUP}"
 
